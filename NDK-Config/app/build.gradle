@@ -19,6 +19,7 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
     sourceSets {
         main {
             jni.srcDirs = [] //禁止自带的ndk功能
@@ -26,30 +27,32 @@ android {
         }
     }
 
+    tasks.withType(JavaCompile) {
+        compileTask -> compileTask.dependsOn ndkBuild
+    }
+
     task ndkBuild(type: Exec, description: 'Compile JNI source with NDK') {
         Properties properties = new Properties()
         properties.load(project.rootProject.file('local.properties').newDataInputStream())
-        def ndkDir = properties.getProperty('ndk.dir')
+        def ndkDir = properties.getProperty('ndk.dir')//获得ndk目录
 
-        if (Os.isFamily(Os.FAMILY_WINDOWS)) {
-//            commandLine "$ndkDir/ndk-build.cmd", 'NDK_DEBUG=1', '-C', file('src/main/jni').absolutePath
+        //执行ndk-build命令
+        if (Os.isFamily(Os.FAMILY_WINDOWS)) {//如果是win系统
+            //commandLine "$ndkDir/ndk-build.cmd", 'NDK_DEBUG=1', '-C', file('src/main/jni').absolutePath //debug命令，如果需要做调试可以使用这条命令
             commandLine "$ndkDir/ndk-build.cmd", '-C', file('src/main/jni').absolutePath
         } else {
-//            commandLine "$ndkDir/ndk-build", 'NDK_DEBUG=1', '-C', file('src/main/jni').absolutePath
+            //commandLine "$ndkDir/ndk-build", 'NDK_DEBUG=1', '-C', file('src/main/jni').absolutePath
             commandLine "$ndkDir/ndk-build", '-C', file('src/main/jni').absolutePath
         }
-    }
-
-    tasks.withType(JavaCompile) {
-        compileTask -> compileTask.dependsOn ndkBuild
     }
 
     task ndkClean(type: Exec, description: 'Clean NDK Binaries') {
         Properties properties = new Properties()
         properties.load(project.rootProject.file('local.properties').newDataInputStream())
-        def ndkDir = properties.getProperty('ndk.dir')
+        def ndkDir = properties.getProperty('ndk.dir')//获得ndk目录
 
-        if (Os.isFamily(Os.FAMILY_WINDOWS)) {
+        //执行ndk-build clear命令
+        if (Os.isFamily(Os.FAMILY_WINDOWS)) {//如果是win系统
             commandLine "$ndkDir/ndk-build.cmd", 'clean', '-C', file('src/main/jni').absolutePath
         } else {
             commandLine "$ndkDir/ndk-build", 'clean', '-C', file('src/main/jni').absolutePath

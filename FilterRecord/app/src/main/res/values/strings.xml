@@ -1,0 +1,47 @@
+<resources>
+    <string name="app_name">FilterRecord</string>
+
+    <string name="action_none">原图</string>
+    <string name="action_fairytale">童话</string>
+    <string name="action_sunrise">日出</string>
+    <string name="action_sunset">日落</string>
+    <string name="action_whitecat">白猫</string>
+    <string name="action_blackcat">黑猫</string>
+    <string name="action_beauty">美肤</string>
+    <string name="action_skinwhiten">美白</string>
+    <string name="action_healthy">健康</string>
+    <string name="action_sweets">甜品</string>
+    <string name="action_romance">浪漫</string>
+    <string name="action_sakura">樱花</string>
+    <string name="action_warm">温暖</string>
+    <string name="action_antique">复古</string>
+    <string name="action_nostalgia">怀旧</string>
+    <string name="action_calm">平静</string>
+    <string name="action_latte">拿铁</string>
+    <string name="action_tender">温柔</string>
+    <string name="action_cool">冰冷</string>
+    <string name="action_emerald">祖母绿</string>
+    <string name="action_evergreen">常青</string>
+    <string name="action_crayon">蜡笔</string>
+    <string name="action_sketch">素描</string>
+    <string name="action_amaro">Amaro</string>
+    <string name="action_brannan">Brannan</string>
+    <string name="action_brooklyn">Brooklyn</string>
+    <string name="action_earlybird">Earlybird</string>
+    <string name="action_freud">Freud</string>
+    <string name="action_hefe">Hefe</string>
+    <string name="action_hudson">Hudson</string>
+    <string name="action_inkwell">Inkwell</string>
+    <string name="action_kevin">Kevin</string>
+    <string name="action_lomo">Lomo</string>
+    <string name="action_n1977">N1977</string>
+    <string name="action_nashville">Nashville</string>
+    <string name="action_pixar">Pixar</string>
+    <string name="action_rise">Rise</string>
+    <string name="action_sierra">Sierra</string>
+    <string name="action_sutro">Sutro</string>
+    <string name="action_toaster2">Toaster2</string>
+    <string name="action_valencia">Valencia</string>
+    <string name="action_walden">Walden</string>
+    <string name="action_xproii">Xproii</string>
+</resources>

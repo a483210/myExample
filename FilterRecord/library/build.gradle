@@ -1,0 +1,29 @@
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion = 25
+    buildToolsVersion = "25.0.2"
+
+    defaultConfig {
+        minSdkVersion 18
+
+        externalNativeBuild {
+            cmake {
+                arguments '-DANDROID_PLATFORM=android-18',
+                        '-DANDROID_TOOLCHAIN=clang',
+                        '-DANDROID_STL=stlport_static'
+            }
+        }
+    }
+
+    externalNativeBuild {
+        cmake {
+            path 'CMakeLists.txt'
+        }
+    }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    testCompile 'junit:junit:4.12'
+}

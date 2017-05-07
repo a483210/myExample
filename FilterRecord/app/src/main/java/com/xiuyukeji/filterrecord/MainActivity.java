@@ -87,7 +87,6 @@ public class MainActivity extends AppCompatActivity {
         mGLSurfaceView.setOnRecordListener(new OnRecordListener() {
             @Override
             public void onRecord(Bitmap bitmap) {
-                Log.i("Tool", bitmap.getWidth() + " ; " + bitmap.getHeight());
                 mImgView.setImageBitmap(bitmap);
             }
         });

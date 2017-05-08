@@ -62,7 +62,7 @@ public abstract class BaseGlSurfaceView extends GLSurfaceView implements GLSurfa
                 .asFloatBuffer();
         mGLTextureBuffer.put(TextureRotationUtil.TEXTURE_NO_ROTATION).position(0);
 
-        setEGLContextClientVersion(2);
+        setEGLContextClientVersion(3);
         setRenderer(this);
         setRenderMode(GLSurfaceView.RENDERMODE_WHEN_DIRTY);
         getHolder().addCallback(this);

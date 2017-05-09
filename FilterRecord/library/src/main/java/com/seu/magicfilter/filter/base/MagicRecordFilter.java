@@ -24,7 +24,8 @@ public class MagicRecordFilter extends GPUImageFilter {
     private IntBuffer mPboIds;
     private int mPboSize;
 
-    private int mRowStride;//默认32的倍数
+    private final int mPixelStride = 4;//RGBA 4字节
+    private int mRowStride;//对齐4字节
     private int mPboIndex;
     private int mPboNewIndex;
     private long mLastTimestamp;//图像时间戳，用于录制帧数判断
@@ -59,6 +60,12 @@ public class MagicRecordFilter extends GPUImageFilter {
             return;
         }
 
+        //内存对齐应该是这样计算，但是不知道为什么这样计算效率反而降低
+        //并且跟ImageReader最终计算出来的rowStride也不一样，这里怀疑跟分辨率有关
+//        final int align = 4;//4字节对齐
+//        mRowStride = (width * mPixelStride + (align - 1)) & ~(align - 1);
+
+        //这里默认取得32的倍数，这样效率反而高，为什么？
         int pixelStride = 32;
 
         float num = width / (float) pixelStride;
@@ -69,8 +76,9 @@ public class MagicRecordFilter extends GPUImageFilter {
         } else {
             mRowStride = (wholeNum + 1) * pixelStride;
         }
+        mRowStride *= mPixelStride;
 
-        mPboSize = mRowStride * height * 4;
+        mPboSize = mRowStride * height;
 
         mPboIds = IntBuffer.allocate(2);
         GLES30.glGenBuffers(2, mPboIds);
@@ -161,7 +169,7 @@ public class MagicRecordFilter extends GPUImageFilter {
 
     private void bindPixelBuffer() {
         GLES30.glBindBuffer(GLES30.GL_PIXEL_PACK_BUFFER, mPboIds.get(mPboIndex));
-        MagicJni.glReadPixels(0, 0, mRowStride, mInputHeight, GLES30.GL_RGBA, GLES30.GL_UNSIGNED_BYTE);
+        MagicJni.glReadPixels(0, 0, mRowStride / mPixelStride, mInputHeight, GLES30.GL_RGBA, GLES30.GL_UNSIGNED_BYTE);
 
         if (mInitRecord) {//第一帧没有数据跳出
             unbindPixelBuffer();
@@ -177,7 +185,7 @@ public class MagicRecordFilter extends GPUImageFilter {
         GLES30.glUnmapBuffer(GLES30.GL_PIXEL_PACK_BUFFER);
         unbindPixelBuffer();
 
-        mRecordHelper.onRecord(byteBuffer, mInputWidth, mInputHeight, mRowStride, mLastTimestamp);
+        mRecordHelper.onRecord(byteBuffer, mInputWidth, mInputHeight, mPixelStride, mRowStride, mLastTimestamp);
     }
 
     //解绑pbo

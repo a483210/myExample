@@ -11,13 +11,15 @@ public class PixelBuffer {
     private final byte[] data;
     private final int width;
     private final int height;
+    private final int pixelStride;
     private final int rowStride;
     private final long timestamp;
 
-    public PixelBuffer(byte[] data, int width, int height, int rowStride, long timestamp) {
+    public PixelBuffer(byte[] data, int width, int height, int pixelStride, int rowStride, long timestamp) {
         this.data = data;
         this.width = width;
         this.height = height;
+        this.pixelStride = pixelStride;
         this.rowStride = rowStride;
         this.timestamp = timestamp;
     }
@@ -34,6 +36,10 @@ public class PixelBuffer {
         return height;
     }
 
+    public int getPixelStride() {
+        return pixelStride;
+    }
+
     public int getRowStride() {
         return rowStride;
     }
@@ -48,6 +54,7 @@ public class PixelBuffer {
                 "data=" + Arrays.toString(data) +
                 ", width=" + width +
                 ", height=" + height +
+                ", pixelStride=" + pixelStride +
                 ", rowStride=" + rowStride +
                 ", timestamp=" + timestamp +
                 '}';

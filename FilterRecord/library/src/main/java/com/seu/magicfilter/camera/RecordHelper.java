@@ -55,16 +55,16 @@ public class RecordHelper extends Handler {
         this.mOnRecordListener = l;
     }
 
-    public void onRecord(ByteBuffer buffer, int width, int height, int rowStride, long timestamp) {
+    public void onRecord(ByteBuffer buffer, int width, int height, int pixelStride, int rowStride, long timestamp) {
         if (mBuffers.size() >= MAX_CACHE_BUFFER_NUMBER) {
             return;
         }
 
-        byte[] data = getBuffer(rowStride * height * 4);
+        byte[] data = getBuffer(rowStride * height);
         buffer.get(data);
         buffer.clear();
 
-        mBuffers.add(new PixelBuffer(data, width, height, rowStride, timestamp));
+        mBuffers.add(new PixelBuffer(data, width, height, pixelStride, rowStride, timestamp));
     }
 
     public void start() {
@@ -89,6 +89,7 @@ public class RecordHelper extends Handler {
     }
 
     private class MyThread extends Thread {//转换成Bitmap演示用效率低下，可以用libyuv代替
+
         @Override
         public void run() {
             while (!isInterrupted()) {
@@ -102,6 +103,7 @@ public class RecordHelper extends Handler {
                 byte[] data = buffer.getData();
                 int width = buffer.getWidth();
                 int height = buffer.getHeight();
+                int pixelStride = buffer.getPixelStride();
                 int rowStride = buffer.getRowStride();
 
                 int size = width * height;
@@ -121,7 +123,7 @@ public class RecordHelper extends Handler {
                         mPixelData[index++] = pixel;
                         offset += 4;
                     }
-                    offset += (rowStride - width) * 4;
+                    offset += rowStride - width * pixelStride;
                 }
 
                 Bitmap bitmap = Bitmap.createBitmap(mPixelData,

@@ -60,23 +60,11 @@ public class MagicRecordFilter extends GPUImageFilter {
             return;
         }
 
-        //内存对齐应该是这样计算，但是不知道为什么这样计算效率反而降低
-        //并且跟ImageReader最终计算出来的rowStride也不一样，这里怀疑跟分辨率有关
-//        final int align = 4;//4字节对齐
-//        mRowStride = (width * mPixelStride + (align - 1)) & ~(align - 1);
-
-        //这里默认取得32的倍数，这样效率反而高，为什么？
-        int pixelStride = 32;
-
-        float num = width / (float) pixelStride;
-        int wholeNum = (int) num;
-
-        if (num == wholeNum) {
-            mRowStride = wholeNum * pixelStride;
-        } else {
-            mRowStride = (wholeNum + 1) * pixelStride;
-        }
-        mRowStride *= mPixelStride;
+        //OpenGLES默认应该是4字节对齐应，但是不知道为什么在索尼Z2上效率反而降低
+        //并且跟ImageReader最终计算出来的rowStride也和我这样计算出来的不一样，这里怀疑跟硬件和分辨率有关
+        //这里默认取得128的倍数，这样效率反而高，为什么？
+        final int align = 128;//128字节对齐
+        mRowStride = (width * mPixelStride + (align - 1)) & ~(align - 1);
 
         mPboSize = mRowStride * height;
 

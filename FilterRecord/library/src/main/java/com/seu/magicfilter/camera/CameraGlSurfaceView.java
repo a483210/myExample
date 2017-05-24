@@ -234,6 +234,10 @@ public class CameraGlSurfaceView extends BaseGlSurfaceView implements GLSurfaceV
     public void stop() {
         mCameraHelper.stopCamera();
         mSensorHelper.release();
+
+        mFilter.destroy();
+        mCameraInputFilter.destroy();
+        mRecordFilter.destroy();
     }
 
     /**

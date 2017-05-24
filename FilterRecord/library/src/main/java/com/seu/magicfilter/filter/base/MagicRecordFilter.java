@@ -82,7 +82,7 @@ public class MagicRecordFilter extends GPUImageFilter {
 
     private void destroyPixelBuffers() {
         if (mPboIds != null) {
-            GLES30.glDeleteBuffers(GLES30.GL_PIXEL_PACK_BUFFER, mPboIds);
+            GLES30.glDeleteBuffers(2, mPboIds);
             mPboIds = null;
         }
     }

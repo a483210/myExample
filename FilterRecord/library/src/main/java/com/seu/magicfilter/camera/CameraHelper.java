@@ -85,6 +85,13 @@ public class CameraHelper {
     }
 
     /**
+     * 是否打开摄像头
+     */
+    public boolean isOpenCamera() {
+        return mCamera != null;
+    }
+
+    /**
      * 切换闪光灯
      */
     public void switchFlash() {

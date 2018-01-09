@@ -20,37 +20,10 @@
             app:popupTheme="@style/AppTheme.PopupOverlay" />
     </android.support.design.widget.AppBarLayout>
 
-    <com.seu.magicfilter.camera.CameraGlSurfaceView
-        android:id="@+id/surface"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/barLayout" />
-
-    <ImageView
-        android:id="@+id/img"
+    <Button
+        android:id="@+id/button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/barLayout"
-        android:background="#ff000000" />
-
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/record"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginBottom="@dimen/fab_margin"
-        android:layout_marginEnd="@dimen/fab_margin"
-        android:layout_marginRight="@dimen/fab_margin"
-        app:srcCompat="@drawable/record_button_selector" />
-
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/switchCamera"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="@dimen/fab_margin"
-        android:layout_marginRight="@dimen/fab_margin"
-        android:layout_toLeftOf="@+id/record"
-        app:srcCompat="@drawable/ic_switch_camera_white_24dp" />
+        android:layout_centerInParent="true"
+        android:text="开始录制" />
 </RelativeLayout>
